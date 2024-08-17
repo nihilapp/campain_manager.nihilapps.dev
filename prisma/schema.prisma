@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  userEmail String     @unique
+  userName  String     @unique
+  userRole  UserRole   @default(NORMAL)
+  UserAuth  UserAuth[]
+  Pc        Pc[]
+  Master    Master[]
+
+  @@index([userEmail, userName])
+  @@map("users")
+}
+
+model UserAuth {
+  id           Int    @id @default(autoincrement())
+  User         User   @relation(fields: [userId], references: [id])
+  userId       Int
+  password     String
+  accessToken  String
+  refreshToken String
+
+  @@map("user_auths")
+}
+
+model Master {
+  id         Int        @id @default(autoincrement())
+  User       User       @relation(fields: [userId], references: [id])
+  userId     Int
+  Campain    Campain    @relation(fields: [campainId], references: [id])
+  campainId  Int
+  masterType MasterType @default(MAIN_MASTER)
+  Session    Session[]
+}
+
+model Campain {
+  id            Int           @id @default(autoincrement())
+  name          String        @unique
+  description   String?
+  startTime     DateTime
+  endTime       DateTime?
+  campainStatus CampainStatus @default(READY)
+  Pc            Pc[]
+  Master        Master[]
+
+  @@index([name])
+  @@map("campains")
+}
+
+model Session {
+  id          Int         @id @default(autoincrement())
+  Master      Master      @relation(fields: [masterId], references: [id])
+  masterId    Int
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  gamers      Int
+  gameDate    String?
+  exp         Int?
+  gold        Int?
+  sessionType SessionType @default(DEFAULT)
+
+  @@map("sessions")
+}
+
+model Pc {
+  id         Int     @id @default(autoincrement())
+  User       User    @relation(fields: [userId], references: [id])
+  userId     Int
+  Campain    Campain @relation(fields: [campainId], references: [id])
+  campainId  Int
+  generation Int
+  slot       Int?    @default(1)
+  name       String  @unique
+  alias      String
+  class1     String
+  class2     String?
+  level1     Int
+  level2     Int?
+  levelTotal Int
+  currentExp Int
+  money      Int
+  backStory  String?
+
+  @@index([name])
+  @@map("pcs")
+}
+
+enum MasterType {
+  MAIN_MASTER
+  SUB_MASTER
+}
+
+enum CampainStatus {
+  READY
+  OPEN
+  CLOSE
+}
+
+enum SessionType {
+  MINI
+  HALF
+  DEFAULT
+}
+
+enum UserRole {
+  ADMIN
+  NORMAL
+}
