@@ -7,3 +7,5 @@ export { Footer } from './layouts/Footer';
 export { Logo } from './layouts/Logo';
 
 export { HomeContent } from './home/HomeContent';
+
+export { UserAdmin } from './admin/user/UserAdmin';

@@ -21,6 +21,9 @@ export function Nav({ styles, }: Props) {
       <nav className={style.default}>
         <div>
           <Link href='/'>홈</Link>
+          {process.env.NODE_ENV === 'development' && (
+            <Link href='/admin/users'>유저 관리</Link>
+          )}
         </div>
       </nav>
     </>

@@ -4,6 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import '@/src/styles/tailwind.css';
 import Script from 'next/script';
 import { configData } from '@/src/data';
+import { LayoutProviders } from '@/src/widgets';
 
 export const metadata: Metadata = {
   metadataBase: new URL(configData.url),
@@ -64,7 +65,9 @@ export default function AppLayout({ children, }: Props) {
         <GoogleAnalytics gaId={configData.googleAnalyticsId} />
       </head>
       <body suppressHydrationWarning>
-        {children}
+        <LayoutProviders>
+          {children}
+        </LayoutProviders>
       </body>
     </html>
   );
