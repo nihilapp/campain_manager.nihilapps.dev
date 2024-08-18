@@ -13,5 +13,14 @@ export {
 } from './common/common.store';
 
 export {
-  type CreateUserDto
+  type CreateUserDto,
+  type UpdateUserDto,
+  type AdminUpdateUserDto,
+  type NewPasswordDto,
+  type UserTokenInfo
 } from './users/users.types';
+
+export {
+  type CreateCampainDto,
+  type UpdateCampainDto
+} from './campains/campains.types';

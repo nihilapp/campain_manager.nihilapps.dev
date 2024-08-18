@@ -23,4 +23,24 @@ export class DB {
   static users() {
     return this.client().user;
   }
+
+  static auths() {
+    return this.client().userAuth;
+  }
+
+  static campains() {
+    return this.client().campain;
+  }
+
+  static masters() {
+    return this.client().master;
+  }
+
+  static sessions() {
+    return this.client().session;
+  }
+
+  static pcs() {
+    return this.client().pc;
+  }
 }

@@ -1,10 +1,16 @@
 import { User } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { DB } from '@/src/utils/prisma';
+import { nihilTool } from '@nihilapp/tools';
 import { ApiResponse, CreateUserDto } from '@/src/entities';
+import { DB } from '@/src/utils';
 
 export async function GET() {
-  const users = await DB.users().findMany();
+  const users = await DB.users().findMany({
+    include: {
+      Master: true,
+      Pc: true,
+    },
+  });
 
   const response = {
     data: users,
@@ -25,6 +31,28 @@ export async function POST(req: NextRequest) {
     data: {
       userEmail,
       userName,
+      userRole: userRole || 'NORMAL',
+    },
+  });
+
+  const accessToken = await nihilTool.jwt.createAccessToken({
+    payload: { userEmail, userName, },
+    secret: process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET,
+  });
+
+  const refreshToken = await nihilTool.jwt.createRefreshToken({
+    payload: { userEmail, userName, },
+    secret: process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET,
+  });
+
+  const hashedPassword = await nihilTool.bcrypt.dataToHash(password);
+
+  await DB.auths().create({
+    data: {
+      userId: newUser.id,
+      password: hashedPassword,
+      accessToken,
+      refreshToken,
     },
   });
 
@@ -34,6 +62,6 @@ export async function POST(req: NextRequest) {
   };
 
   return Response.json(response, {
-    status: 200,
+    status: 201,
   });
 }

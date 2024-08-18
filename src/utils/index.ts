@@ -1,3 +1,4 @@
 export { Api } from './axios';
 export { setMeta } from './setMeta';
-export { Prisma } from './prisma';
+export { DB } from './prisma';
+export { tokenCheck } from './tokenCheck';

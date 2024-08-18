@@ -1339,10 +1339,10 @@
   dependencies:
     third-party-capital "1.0.20"
 
-"@nihilapp/tools@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@nihilapp/tools/-/tools-0.0.3.tgz#6e6dfb2036b2ceb094c4b648bbe0bcd355f42706"
-  integrity sha512-fkC0xsQwnALe+ebx23Dr7fU1OiBO/6Q5iZSfPnqazr2MPXlCnog5es1uL3YWx47cB/CeaU7oOEhMn4ONWjRgug==
+"@nihilapp/tools@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@nihilapp/tools/-/tools-0.0.8.tgz#b016519acb0a0b17a6005c5074cdacc0c350c9ec"
+  integrity sha512-E3Llq4jUETTIKy/TfE4+QKQ+XMZH1b4KY0kx9JIEH4kUR4gkLRAfsYoHU1mAEK2DV2jKaCzCk4hbfCJhDXZnJg==
   dependencies:
     bcryptjs "^2.4.3"
     dayjs "^1.11.11"
